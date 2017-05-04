@@ -1,0 +1,50 @@
+  {
+  "meds": [
+    {
+      "username": "Mikel",
+      "timeNeeded": "10",
+      "med_name": "Ritalin",
+      "timeTaken": "7"
+    }
+  ],
+  "phy": [
+    {
+      "username": "Mikel",
+      "notes" : "Hello world",
+      "timeNeeded" : "7",
+      "type" : "Severe",
+      "timeDone" : "14"
+
+    }
+  ],
+  "ano": [
+    {
+      "username": "Mikel",
+      "startWorseningTime" : "2017-05-04 20:08:53.142406",
+      "endWorseningTime" : "2017-05-04 22:06:53.142406",
+      "notes" : "I made some physical activity..."
+    }
+  ],
+  "sos": [
+    {
+      "username": "Mikel",
+      "startTime" : "2017-05-04 22:00:00.142406",
+      "endTime":"2017-05-04 22:06:53.142406",
+      "notes":"Use some cannabis due to severe pain..."
+    }
+  ],
+  "pain": [
+    {
+      "username": "Mikel",
+      "body_parts": ["neck", "shoulder"],
+      "date": "2017-05-04 14:02:46.691139",
+      "level": 10,
+      "duration": "10",
+      "context": "Sports",
+      "type": ["burn", "sharp"],
+      "was_sos_med": false,
+      "influences": "Couldn't walk...",
+      "mood": "depressed"
+    }
+  ]
+}
