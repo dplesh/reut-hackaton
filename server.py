@@ -2,7 +2,13 @@
 
 import json
 from flask import Flask
+from flask_cors import CORS, cross_origin
+
+
+
+
 app = Flask(__name__)
+CORS(app)
 
 # Priority 2: POST Request from client to get new Pain Report
 pass
@@ -28,7 +34,7 @@ def meds(username):
         dbdict = json.load(dbfile)
 
     # import ipdb; ipdb.set_trace()
-    matching = [obj for obj in dbdict["meds"] if obj["username"] == username]
+    matching = [obj for obj in dbdict["meds"] if obj["username"].lower() == username.lower()]
     return json.dumps({"data": matching})
 
 @app.route('/<username>/phy')
@@ -37,7 +43,7 @@ def phy(username):
         dbdict = json.load(dbfile)
 
     # import ipdb; ipdb.set_trace()
-    matching = [obj for obj in dbdict["phy"] if obj["username"] == username]
+    matching = [obj for obj in dbdict["phy"] if obj["username"].lower() == username.lower()]
     return json.dumps({"data": matching})
 
 
@@ -60,7 +66,7 @@ def pain(username):
         dbdict = json.load(dbfile)
 
     # import ipdb; ipdb.set_trace()
-    matching = [obj for obj in dbdict["pain"] if obj["username"] == username]
+    matching = [obj for obj in dbdict["pain"] if obj["username"].lower() == username.lower()]
     return json.dumps({"data": matching})
 
 
@@ -69,4 +75,4 @@ def users():
     return {"data": ["Mikel"]}
 
 
-# TODO: Add POST
+# TODO: Add POST0
