@@ -37,16 +37,19 @@ pass  # Implemented on generate.py
 class Notifications(object):
     _list = []
     running_id = 0
-    def add(self, message, severity):
-        _list.append({"id": running_id, "isRead": "false", 
+    @classmethod
+    def add(cls, message, severity):
+        cls._list.append({"id": cls.running_id, "isRead": "false",
         "message": message, "severity": severity})
 
-    running_id += 1
+        cls.running_id += 1
 
-    def mark_read(self, id):
-        for notif in self._list:
-            if notif["id"] == id:
-                notif["isRead"] = "true";
+    running_id += 1
+    @classmethod
+    def mark_read(cls, id):
+        for notif in cls._list:
+            if str(notif["id"]) == str(id):
+                notif["isRead"] = "true"
 
 @app.route('/<username>/meds')
 def meds(username):
@@ -105,7 +108,8 @@ def sos_anomalies(username):
     sos_events.sort(key=lambda x: parser.parse(x.date))
 
     while index < len(sos_events) - 2:
-        bla
+        # bla
+        pass
     return anomalies
 
 @app.route('/<username>/sos')
