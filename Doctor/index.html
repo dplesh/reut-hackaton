@@ -6,8 +6,6 @@
 
 <title>דוקטור תציל אותי</title>
 
-
-
 <script src="./js/angular.js"> </script>
 <script src="./js/angular-animate.js"> </script>
 <script src="./js/angular-aria.js"> </script>
@@ -16,6 +14,9 @@
 <script src="./js/angular-material.js"> </script>
 <script src="./js/app.js"> </script>
 <script src="./js/angular-resource.js"> </script>
+<script src="./js/jquery-3.2.1.min.js"> </script>
+<script src="./css/bootstrap-3.3.7-dist/js/bootstrap.min.js"> </script>
+
 <script src="./controllers/mainController.js"> </script>
 <script src="./controllers/userController.js"> </script>
 <script src="./controllers/painDiaryController.js"> </script>
@@ -23,9 +24,12 @@
 <script src="./services/userService.js"> </script>
 <script src="./js/plotly-latest.min.js"> </script>
 <script src="./controllers/searchController.js"> </script>
+<script src="./services/notificationService.js"> </script>
+<script src="./controllers/notificationController.js"> </script>
 
-<link rel="stylesheet" href="./css/main.css">
-<link rel="stylesheet" href="./css/angular-material.css">
+<link rel="stylesheet" href="./css/main.css"/>
+<link rel="stylesheet" href="./css/angular-material.css"/>
+<link rel="stylesheet" href="./css/bootstrap-3.3.7-dist/css/bootstrap.css"/>
 
 <script>
 
@@ -67,7 +71,6 @@ document.onkeypress = function (e) {
 
 };
 
-
 </script
 </head>
 
@@ -79,7 +82,8 @@ document.onkeypress = function (e) {
       nav-bar-aria-label="navigation links">
       <md-nav-item md-nav-href="#!/" name="page1">Home</md-nav-item>
       <md-nav-item md-nav-href="#!/user" name="page2">User</md-nav-item>
-      <md-nav-item md-nav-href="#!/painDiary" name="painDiaryPage">Pain diary</md-nav-item>
+      <md-nav-item md-nav-href="#!/painDiary" name="painDiaryPage">Pain Diary</md-nav-item>
+      <md-nav-item md-nav-href="#!/notifications" name="notificationsPage">Notifications</md-nav-item>
       <div ng-controller="searchController as ctrl" layout="column" ng-cloak="" class="autocompletedemoBasicUsage">
   <md-content class="md-padding search-content" >
     <form ng-keypress="ctrl.goToUser($event)">
@@ -100,9 +104,6 @@ document.onkeypress = function (e) {
 
   </md-content>
 </div>
-
-        
-
 
 </body>
 
