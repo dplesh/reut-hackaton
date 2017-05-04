@@ -7,8 +7,8 @@ angular.module('doctorApp')
 
         var layout = {
             title: 'Pain Diary',
-            height: 400,
-            width: 800,
+            height: 450,
+            width: 1000,
             yaxis: {
                 range: [0, 10]
             },
@@ -64,7 +64,7 @@ angular.module('doctorApp')
                 "Influences: " + report.influences + "<br>" +
                 "Pain type: " + report.type.toString() + "<br>" +
                 "Pain place: " + report.body_parts.toString() + "<br>" +
-                "Pain duration: " + report.duration + "minutes";
+                "Pain duration: " + report.duration + " minutes";
         };
 
         Reports.get({
