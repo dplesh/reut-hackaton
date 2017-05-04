@@ -3,12 +3,13 @@
 import json
 from flask import Flask
 from flask_cors import CORS, cross_origin
-
+from juggernaut import Juggernaut
 
 
 
 app = Flask(__name__)
 CORS(app)
+jug = Juggernaut()
 
 # Priority 2: POST Request from client to get new Pain Report
 pass
@@ -75,4 +76,12 @@ def users():
     return {"data": ["Mikel"]}
 
 
-# TODO: Add POST0
+@app.route("/<username>/report/pain", methods=['POST']):
+def handle_report(username):
+    assert request.method == 'POST'
+    save_report_to_the_db()
+    jug.publish(username, "published pain")
+
+
+def save_report_to_the_db(report):
+    print "Saving Report to the DB......"
