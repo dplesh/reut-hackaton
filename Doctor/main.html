@@ -29,27 +29,39 @@
     <md-nav-bar
       md-selected-nav-item="currentNavItem"
       nav-bar-aria-label="navigation links">
-      <md-nav-item md-nav-click="goto('Search')" name="page1">
-        Page One
+      <!-- 
+      <a href="#/home"> <md-nav-item md-nav-href="#/home" name="page1"> 
+        Home
       </md-nav-item>
-      <md-nav-item md-nav-click="goto('Users')" name="page2">
-        Page Two
+      </a>
+      <a href="#/user"> <md-nav-item md-nav-href="#/user" name="page2"> 
+        User
       </md-nav-item>
-      <md-nav-item md-nav-click="goto('Test')" name="page3">
-        Page Three
+      </a>
+      <a href="#/more"> <md-nav-item md-nav-href="#/more" name="page3">
+        More
       </md-nav-item>
-      <!-- these require actual routing with ui-router or ng-route, so they
-      won't work in the demo
-      <md-nav-item md-nav-href="#page4" name="page5">Page Four</md-nav-item>
-      <md-nav-item md-nav-sref="app.page5" name="page4">Page Five</md-nav-item>
-      You can also add options for the <code>ui-sref-opts</code> attribute.
-      <md-nav-item md-nav-sref="page6" sref-opts="{reload:true, notify:true}">
-        Page Six
-      </md-nav-item>
+      </a>
       -->
+      <!-- these require actual routing with ui-router or ng-route, so they
+      won't work in the demo -->
+      
+      <md-nav-item md-nav-href="/home" name="page1">Home</md-nav-item>
+      <md-nav-item md-nav-href="/user" name="page2">User</md-nav-item>
+      <md-nav-item md-nav-href="/more" name="page3">More</md-nav-item>
+      
+      <!--
+      <a href="/home">Home</a>
+      <a href="/user">User</a>
+      <a href="/more">More</a>
+      -->
+      
+      
     </md-nav-bar>
     <div class="ext-content">
       <ng-view>
+
+      </ng-view>
     </div>
 
   </md-content>
