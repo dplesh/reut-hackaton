@@ -6,8 +6,21 @@ app.config(function($routeProvider, $locationProvider) {
             templateUrl: './views/user.html',
             controller: 'userController'
         })
+        .when('/home',{
+            templateUrl: './views/home.html',
+            controller: 'mainController'
+        })
         .when('/', {
             templateUrl: './views/home.html',
             controller: 'mainController'
+        })
+        .otherwise({
+            templateUrl: './views/home.html',
+            controller: 'mainController'
+        });
+
+        $locationProvider.html5Mode({
+            enabled: false,
+            requireBase: false
         });
 });
