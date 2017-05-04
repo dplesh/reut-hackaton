@@ -18,6 +18,10 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: './views/home.html',
             controller: 'mainController'
         })
+        .when('/notifications', {
+            templateUrl: './views/notifications.html',
+            controller: 'notificationController'
+        })
         .otherwise({
             templateUrl: './views/home.html',
             controller: 'mainController'
