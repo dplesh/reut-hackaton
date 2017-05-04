@@ -18,10 +18,6 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: './views/home.html',
             controller: 'mainController'
         })
-        .when('/search', {
-            templateUrl: './views/search.html',
-            controller: 'searchController'
-        })
         .otherwise({
             templateUrl: './views/home.html',
             controller: 'mainController'
