@@ -15,8 +15,11 @@
 <script src="./js/angular-route.js"> </script>
 <script src="./js/angular-material.js"> </script>
 <script src="./js/app.js"> </script>
+<script src="./js/angular-resource.js"> </script>
 <script src="./controllers/mainController.js"> </script>
 <script src="./controllers/userController.js"> </script>
+<script src="./controllers/painDiaryController.js"> </script>
+<script src="./services/reports.js"> </script>
 <script src="./services/userService.js"> </script>
 <script src="./controllers/searchController.js"> </script>
 
@@ -67,31 +70,18 @@ document.onkeypress = function (e) {
 </script
 </head>
 
-<body ng-controller="mainController" ng-cloak>
+<body ng-controller="mainController">
 <div ng-cloak>
   <md-content class="md-padding">
     <md-nav-bar
       md-selected-nav-item="currentNavItem"
       nav-bar-aria-label="navigation links">
-      <!-- 
-      <a href="#/home"> <md-nav-item md-nav-href="#/home" name="page1"> 
-        Home
-      </md-nav-item>
-      </a>
-      <a href="#/user"> <md-nav-item md-nav-href="#/user" name="page2"> 
-        User
-      </md-nav-item>
-      </a>
-      <a href="#/more"> <md-nav-item md-nav-href="#/more" name="page3">
-        More
-      </md-nav-item>
-      </a>
-      -->
-      <!-- these require actual routing with ui-router or ng-route, so they
-      won't work in the demo -->
       
       <md-nav-item md-nav-href="#!/" name="page1">Home</md-nav-item>
       <md-nav-item md-nav-href="#!/user" name="page2">User</md-nav-item>
+<<<<<<< HEAD
+      <md-nav-item md-nav-href="#!/painDiary" name="painDiaryPage">Pain diary</md-nav-item>
+=======
       <md-nav-item md-nav-href="#!/search" name="page3">Search</md-nav-item>
       
       <!--
@@ -100,6 +90,7 @@ document.onkeypress = function (e) {
       <a href="/more">More</a>
       -->
       
+>>>>>>> f771ea75e49f2529b82d5cc0ea2acae830b129e3
       
     </md-nav-bar>
     

@@ -1,4 +1,4 @@
-var app = angular.module('doctorApp', ['ngRoute', 'ngMaterial']);
+var app = angular.module('doctorApp', ['ngRoute', 'ngMaterial', 'ngResource']);
 
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -9,6 +9,10 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/home', {
             templateUrl: './views/home.html',
             controller: 'mainController'
+        })
+        .when('/painDiary', {
+            templateUrl: './views/painDiary.html',
+            controller: 'painDiaryController'
         })
         .when('/', {
             templateUrl: './views/home.html',
