@@ -1,1 +1,1 @@
-var app = angular.module('doctorApp', ['ngRoute']);
+var app = angular.module('doctorApp', ['ngRoute', 'ngMaterial']);
