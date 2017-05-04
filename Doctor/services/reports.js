@@ -1,9 +1,12 @@
-var app = angular.module('doctorApp', ['ngResource', 'ngRoute']);
+var app = angular.module('doctorApp');
 
-// Some APIs expect a PUT request in the format URL/object/ID
-// Here we are creating an 'update' method
 app.factory('Reports', ['$resource', function ($resource) {
-    return $resource('../painReports/:userName', {
-        userId: '@id'
+    return $resource('../painReports/:userName/reports.json', {
+        userName: '@id'
+    }, {
+        get: {
+            method: 'GET',
+            isArray: false
+        }
     });
 }]);
