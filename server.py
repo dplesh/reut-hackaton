@@ -1,6 +1,8 @@
 
 
 import json
+
+from dateutil.parser import parser
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from juggernaut import Juggernaut
@@ -55,19 +57,56 @@ def phy(username):
     matching = [obj for obj in dbdict["phy"] if obj["username"].lower() == username.lower()]
     return json.dumps({"data": matching})
 
-
-
-@app.route('/<username>/anomalies')
-def anomalies(username):
+@app.route('/<username>/pain_anomalies')
+def pain_anomalies(username):
+    anomalies = []
+    index = 0
     with open('db.json','r') as dbfile:
         dbdict = json.load(dbfile)
 
-    return "meow"
+    pain_events = [obj for obj in dbdict["pain"] if obj["username"].lower() == username.lower()]
+    pain_events.sort(key=lambda x: parser.parse(x.date))
 
+    while index < len(pain_events) - 2:
+        anomaly = {}
+        #if a three point decrease is found, check the size of the ouchy.
+        if pain_events[index].level < pain_events[index+1].level and pain_events[index + 1].level < pain_events[index + 2].level:
+            anomaly["startWorseningTime"] = pain_events[index].date
+            end_index = index+2
+            while end_index < len(pain_events) - 1:
+                if pain_events[end_index].level < pain_events[end_index+1].level:
+                    end_index+=1
+                else:
+                    anomaly["endWorseningTime"] = pain_events[end_index].date
+                    index = end_index
+                    anomalies.append(anomaly)
+                    break
+        index+=1
+
+    return anomalies
+
+@app.route('/<username>/sos_anomalies')
+def sos_anomalies(username):
+    anomalies = []
+    index = 0
+    with open('db.json','r') as dbfile:
+        dbdict = json.load(dbfile)
+
+    sos_events = [obj for obj in dbdict["sos"] if obj["username"].lower() == username.lower()]
+    sos_events.sort(key=lambda x: parser.parse(x.date))
+
+    while index < len(sos_events) - 2:
+        bla
+    return anomalies
 
 @app.route('/<username>/sos')
 def sos(username):
-    return "meow"
+    with open('db.json', 'r') as dbfile:
+        dbdict = json.load(dbfile)
+
+    sos_events = [obj for obj in dbdict["sos"] if obj["username"].lower() == username.lower()]
+    sos_events.sort(key=lambda x: parser.parse(x.date))
+    return json.dumps({"data":sos_events})
 
 @app.route('/<username>/pain')
 def pain(username):
