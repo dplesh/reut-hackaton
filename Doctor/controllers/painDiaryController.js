@@ -3,43 +3,49 @@ angular.module('doctorApp')
 
         $scope.reports = [];
 
-        Reports.get({
-            userName: 'dan'
-        }).$promise.then(function (response) {
-            $scope.reports = response.reports;
-        });
+
 
         $scope.try = function () {
             console.log("a");
         }
 
+        Reports.get({
+            userName: 'dan'
+        }).$promise.then(function (response) {
+            $scope.reports = response.reports;
+            CreatePainReportsGraph('myDiv', response.reports)
+        });
 
-        var trace1 = {
-            x: [1, 2, 3, 4],
-            y: [10, 15, 13, 17],
-            mode: 'markers'
-        };
 
-        var trace2 = {
-            x: [2, 3, 4, 5],
-            y: [16, 5, 11, 10],
-            mode: 'lines'
-        };
+        CreatePainReportsGraph = function (divName, reports) {
 
-        var trace3 = {
-            x: [1, 2, 3, 4],
-            y: [12, 9, 15, 12],
-            mode: 'lines+markers'
-        };
+            reportsTimes = reports.map(function (report) {
+                return report.date;
+            });
 
-        var data = [trace1, trace2, trace3];
+            reportsPainValues = reports.map(function (report) {
+                return report.level;
+            });
 
-        var layout = {
-            title: 'Line and Scatter Plot',
-            height: 400,
-            width: 480
-        };
+            var trace1 = {
+                x: reportsTimes,
+                y: reportsPainValues,
+                mode: 'lines'
+            };
 
-        Plotly.newPlot('myDiv', data, layout);
+            var data = [trace1];
+
+            var layout = {
+                title: 'Pain Diary',
+                height: 400,
+                width: 480,
+                yaxis: {
+                    range: [0, 10]
+                },
+            };
+
+            Plotly.newPlot(divName, data, layout);
+        }
+
 
     }]);
