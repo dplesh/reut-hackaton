@@ -1,7 +1,7 @@
 var app = angular.module('doctorApp');
 
 app.factory('Reports', ['$resource', function ($resource) {
-    return $resource('../painReports/:userName/reports.json', {
+    return $resource('http://172.22.5.241:5000/:userName/pain/', {
         userName: '@id'
     }, {
         get: {
