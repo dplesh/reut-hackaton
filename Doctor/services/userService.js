@@ -1,10 +1,10 @@
 angular.module('doctorApp')
-    .service('userService', () => {
+    .service('userService',['$q', function($q){
         let getUsersByName = function (users, name) {
             let result = [];
-            for (let user in users) {
-                if (user.startsWith(name)) {
-                    result.push(result);
+            for (let user of users) {
+                if (user.name.toLowerCase().startsWith(name.toLowerCase())) {
+                    result.push({display: user.name, value: user});
                 }
             }
             return result;
@@ -28,8 +28,7 @@ angular.module('doctorApp')
             }
         ];
 
-        this.findUserByName = function (name) {
+        this.findUsersByName = function (name) {
             return getUsersByName(users, name);
         }
-
-    });
+    }]);
