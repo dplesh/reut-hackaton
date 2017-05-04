@@ -1,4 +1,10 @@
 md-content .ext-content {
   padding: 50px;
   margin: 20px;
-  background-color: #FFF2E0; }
+  background-color: rgb(230, 230, 230); 
+  border-radius: 1em;
+}
+
+.search-content {
+  border-radius: 0.3em;
+}
