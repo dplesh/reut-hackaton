@@ -1,7 +1,7 @@
 
 
 import json
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from juggernaut import Juggernaut
 
@@ -76,7 +76,7 @@ def users():
     return {"data": ["Mikel"]}
 
 
-@app.route("/<username>/report/pain", methods=['POST']):
+@app.route("/<username>/report/pain", methods=['POST'])
 def handle_report(username):
     assert request.method == 'POST'
     save_report_to_the_db()

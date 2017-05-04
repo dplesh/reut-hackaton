@@ -1,6 +1,7 @@
 import time
 import json
 import random
+from datetime import  datetime, timedelta
 
 def generate_normal_samples():
 
@@ -14,8 +15,13 @@ def generate_normal_samples():
     sos = olddbbdict["sos"]
     ano = olddbbdict["ano"]
 
-    for i in xrange(20):
-        pass
+    initial_date = datetime.today() - timedelta(days=random.randint(30,35)
+                                                ,minutes=random.randint(6,19)
+                                                ,seconds=random.randint(13,31))
+    while initial_date<datetime.now():
+
+        initial_date = initial_date + timedelta(minutes=random.randint(6*60,9*60)
+                                                ,seconds=random.randint(13,31))
 
     new_db = {"phys" : phys, "meds": meds, "pain": pains, "sos": sos, "ano": ano}
 
