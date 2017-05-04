@@ -36,8 +36,17 @@ pass  # Implemented on generate.py
 
 class Notifications(object):
     _list = []
+    running_id = 0
+    def add(self, message, severity):
+        _list.append({"id": running_id, "isRead": "false", 
+        "message": message, "severity": severity})
 
+    running_id += 1
 
+    def mark_read(self, id):
+        for notif in self._list:
+            if notif["id"] == id:
+                notif["isRead"] = "true";
 
 @app.route('/<username>/meds')
 def meds(username):
@@ -130,9 +139,19 @@ def users():
 
 @app.route('/notifications')
 def notifications():
-    notif = Notifications._list[:] # if u want other notif mecha change this
-    Notifications._list = []
-    return json.dumps(notif)
+    return json.dumps(Notifications._list)
+
+@app.route("/readnotif", methods=['POST'])
+def read_notif():
+
+    #  wget --post-data "id=1" http://localhost:5000/????/report/pain
+
+
+    assert request.method == 'POST'
+    id = request.form["id"]
+    Notifications.mark_read(id)
+    return json.dumps({})  # need to return something ...
+
 
 @app.route("/<username>/report/pain", methods=['POST'])
 def handle_report(username):
@@ -143,7 +162,10 @@ def handle_report(username):
     assert request.method == 'POST'
     save_report_to_the_db(request.form["report"])
     if there_is_anomaly():
-        Notifications._list.append(username) # change this
+        Notifications.add("An anomaly was reported with %s, you might want to check him out." % username, 
+         "high")
+    else:
+        Notifications.add("%s filled in a pain report" % username,  "medium")
     return json.dumps({})  # need to return something ...
 
 
