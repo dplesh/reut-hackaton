@@ -22,6 +22,8 @@
 <script src="./services/reports.js"> </script>
 <script src="./services/userService.js"> </script>
 <script src="./js/plotly-latest.min.js"> </script>
+<script src="./controllers/searchController.js"> </script>
+
 <link rel="stylesheet" href="./css/main.css">
 <link rel="stylesheet" href="./css/angular-material.css">
 
@@ -77,6 +79,7 @@ document.onkeypress = function (e) {
       nav-bar-aria-label="navigation links">
       
       <md-nav-item md-nav-href="#!/" name="page1">Home</md-nav-item>
+      <md-nav-item md-nav-href="#!/search" name="page3">Search</md-nav-item>
       <md-nav-item md-nav-href="#!/user" name="page2">User</md-nav-item>
       <md-nav-item md-nav-href="#!/painDiary" name="painDiaryPage">Pain diary</md-nav-item>
       <md-nav-item md-nav-href="#!/search" name="page3">Search</md-nav-item>
@@ -86,7 +89,6 @@ document.onkeypress = function (e) {
       <a href="/user">User</a>
       <a href="/more">More</a>
 
-      
       
     </md-nav-bar>
     
