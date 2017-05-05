@@ -1,8 +1,15 @@
 
 
 import json
-from flask import Flask
+from flask import Flask, request
+from flask_cors import CORS, cross_origin
+from juggernaut import Juggernaut
+
+
+
 app = Flask(__name__)
+CORS(app)
+jug = Juggernaut()
 
 # Priority 2: POST Request from client to get new Pain Report
 pass
@@ -28,7 +35,7 @@ def meds(username):
         dbdict = json.load(dbfile)
 
     # import ipdb; ipdb.set_trace()
-    matching = [obj for obj in dbdict["meds"] if obj["username"] == username]
+    matching = [obj for obj in dbdict["meds"] if obj["username"].lower() == username.lower()]
     return json.dumps({"data": matching})
 
 @app.route('/<username>/phy')
@@ -37,7 +44,7 @@ def phy(username):
         dbdict = json.load(dbfile)
 
     # import ipdb; ipdb.set_trace()
-    matching = [obj for obj in dbdict["phy"] if obj["username"] == username]
+    matching = [obj for obj in dbdict["phy"] if obj["username"].lower() == username.lower()]
     return json.dumps({"data": matching})
 
 
@@ -60,7 +67,7 @@ def pain(username):
         dbdict = json.load(dbfile)
 
     # import ipdb; ipdb.set_trace()
-    matching = [obj for obj in dbdict["pain"] if obj["username"] == username]
+    matching = [obj for obj in dbdict["pain"] if obj["username"].lower() == username.lower()]
     return json.dumps({"data": matching})
 
 
@@ -69,4 +76,12 @@ def users():
     return {"data": ["Mikel"]}
 
 
-# TODO: Add POST
+@app.route("/<username>/report/pain", methods=['POST'])
+def handle_report(username):
+    assert request.method == 'POST'
+    save_report_to_the_db()
+    jug.publish(username, "published pain")
+
+
+def save_report_to_the_db(report):
+    print "Saving Report to the DB......"
