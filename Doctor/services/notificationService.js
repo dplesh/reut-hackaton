@@ -40,17 +40,8 @@ angular.module('doctorApp')
         }
 
         this.markNotificationAsRead = function (notificationId) {
-            $http({
-                method: 'POST',
-                url: 'http://localhost:5000/readnotif',
-                data: {
-                    id: 1
-                }
-            }).then(()=>{
-                // nothing
-            })
-            .catch((err)=>{
-                console.log(err);
-            })
+            var url ='http://localhost:5000/readnotif/' + notificationId;
+            console.log(url);
+            $http.get(url).then(() => {});
         }
     });

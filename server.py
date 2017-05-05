@@ -5,13 +5,10 @@ import json
 from dateutil import parser
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-from juggernaut import Juggernaut
-
 
 
 app = Flask(__name__)
 CORS(app)
-jug = Juggernaut()
 
 # Priority 2: POST Request from client to get new Pain Report
 pass
@@ -206,14 +203,8 @@ def users():
 def notifications():
     return json.dumps(Notifications._list)
 
-@app.route("/readnotif", methods=['POST'])
-def read_notif():
-
-    #  wget --post-data "id=1" http://localhost:5000/????/report/pain
-
-
-    assert request.method == 'POST'
-    id = request.form["id"]
+@app.route("/readnotif/<id>")
+def read_notif(id):
     Notifications.mark_read(id)
     return json.dumps({})  # need to return something ...
 

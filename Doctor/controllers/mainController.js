@@ -37,7 +37,7 @@ angular.module('doctorApp')
             return result;
         }
 
-        setInterval(getNotifications, 1000);
+        setInterval(getNotifications, 3000);
         $scope.currentNavItem = 'page1';
 
         //Internal, black box Danelkis functions
