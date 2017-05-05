@@ -5,29 +5,40 @@ angular.module('doctorApp')
         let getNotifications = function () {
             return $http({
                 method: 'GET',
-                url: 'http://172.22.5.241:5000/notifications'
+                url: 'http://localhost:5000/notifications'
             }).then(function successCallback(response) {
-                let resultNotifications = response.data.map((value) => {
-                    
-                    if (!(lastPolledNotifications.indexOf(value) == -1)){
-                        notifyMe("New notification received", value.message, "#!/notifications");
-                        console.log("New notiication rececived!");
-                    }
+                let newNotifications = response.data.filter(function(x){
+                    return x.isRead == 'false';
                 });
-                lastPolledNotifications = resultNotifications;
-
-                return resultNotifications;
-            }, function errorCallback(response) {
-                return [];
+                let notificationDiff = getNotificationDiff(newNotifications, lastPolledNotifications);
+                for (let notification of notificationDiff) {
+                    notifyMe("New notification received", notification.message, "#!/notifications");
+                    console.log("New notiication rececived!");
+                }
+                lastPolledNotifications = newNotifications;
             });
+            return resultNotifications;
         }
 
-        $interval(getNotifications, 2000);
+        let getNotificationDiff = function (newArray, oldArray) {
+            let result = [];
+            for (let notification1 of newArray) {
+                let notificationFound = false;
+                for (let notification2 of oldArray) {
+                    if (notification1.id == notification2.id) {
+                        notificationFound = true;
+                        break;
+                    }
+                }
+                if (!notificationFound){
+                    result.push(notification1);
+                }
+            }
+            return result;
+        }
+
+        setInterval(getNotifications, 1000);
         $scope.currentNavItem = 'page1';
-
-        
-        
-
 
         //Internal, black box Danelkis functions
 
