@@ -17,7 +17,7 @@ angular.module('doctorApp')
         }
 
         let goToUser = function (user) {
-            $location.path("/user/" + user.value);
+            $location.path("/painDiary/" + user.value);
         }
 
         // ******************************
@@ -51,8 +51,6 @@ angular.module('doctorApp')
                     }];
                 });
         }
-
-
 
         function selectedItemChange(item) {
             $log.info('Item changed to ' + JSON.stringify(item));

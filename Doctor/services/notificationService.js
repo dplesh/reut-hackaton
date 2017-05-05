@@ -1,6 +1,7 @@
 angular.module('doctorApp')
-.service('notificationService', function(){
-    this.getUnreadNotifications = function(){
+    .service('notificationService', function ($http) {
+        this.getUnreadNotifications = function () {
+            /*
         let notifications = [
             {
                 id : 0,
@@ -34,12 +35,13 @@ angular.module('doctorApp')
                 severity: 'medium'
             }
         ];
-        
-        return notifications;
-    }
+*/
 
-    this.markNotificationAsRead = function(notificationId){
-        // Tell server
-        console.log("Server told to mark notification " + notificationId + " as unread.");
-    }
-});
+        }
+
+        this.markNotificationAsRead = function (notificationId) {
+            var url ='http://localhost:5000/readnotif/' + notificationId;
+            console.log(url);
+            $http.get(url).then(() => {});
+        }
+    });
