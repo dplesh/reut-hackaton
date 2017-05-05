@@ -49,6 +49,10 @@ class Notifications(object):
             if str(notif["id"]) == str(id):
                 notif["isRead"] = "true"
 
+    @classmethod
+    def get_length(cls):
+        return len(cls._list)
+
 @app.route('/<username>/meds')
 def meds(username):
     with open('db.json','r') as dbfile:
@@ -89,6 +93,11 @@ def pain_anomalies(username):
                 else:
                     break
             anomaly["endWorseningTime"] = pain_events[end_index]["date"]
+            if Notifications.get_length() < 3:
+                Notifications.add(
+                    "An pain anomaly was reported with mikel, he has increasing pain in a few days.. details: %s" % (
+                    username),
+                    "high")
             anomalies.append(anomaly)
 
             index = end_index
@@ -118,8 +127,8 @@ def there_is_a_pain_anomaly(username):
                     break
             anomaly["endWorseningTime"] = pain_events[end_index]["date"]
             anomalies.append(anomaly)
-            Notifications.add("An pain anomaly was reported with %s, he has increasing pain in a few days.." % username,
-                              "high")
+            #Notifications.add("An pain anomaly was reported with %s, he has increasing pain in a few days.." % username,
+             #                 "high")
             index = end_index
         index += 1
 
@@ -229,8 +238,12 @@ def sos_anomalies(username):
                     break
             anomaly["endWorseningTime"] = sos_events[end_index]["time_taken"]
             anomalies.append(anomaly)
-            Notifications.add("An Sos anomaly was reported with %s, he took too many sos pills a few days.." % username,
-                              "high")
+            if Notifications.get_length() < 3:
+                Notifications.add(
+                    "An sos anomaly was reported with mikel, he is taking too many sos pills in a few days.. details %s" % (
+                    username),
+                    "high")
+
             index = end_index
         index += 1
     return json.dumps({"data": anomalies})
@@ -241,7 +254,7 @@ def sos(username):
         dbdict = json.load(dbfile)
 
     sos_events = [obj for obj in dbdict["sos"] if obj["username"].lower() == username.lower()]
-    sos_events.sort(key=lambda x: x["date"])
+    sos_events.sort(key=lambda x: x["time_taken"])
     return json.dumps({"data":sos_events})
 
 @app.route('/<username>/pain')
@@ -266,14 +279,6 @@ def users():
 
 @app.route('/notifications')
 def notifications():
-    if pain_anomalies("mikel"):
-        Notifications.add("An pain anomaly was reported with mikel, he has increasing pain in a few days.. details: %s" % (str(pain_anomalies("mikel"))),
-                      "high")
-
-    if sos_anomalies("mikel"):
-        Notifications.add("An sos anomaly was reported with mikel, he is taking too many sos pills in a few days.. details %s" % (str(sos_anomalies("mikel"))),
-                      "high")
-
     return json.dumps(Notifications._list)
 
 @app.route("/readnotif/<id>")
@@ -288,11 +293,13 @@ def handle_report(username):
     assert request.method == 'POST'
     save_report_to_the_db(request.form["report"])
     if there_is_a_pain_anomaly(username):
-        Notifications.add("An anomaly was reported with %s, you might want to check him out." % username,
-         "high")
+        pass
+        #Notifications.add("An anomaly was reported with %s, you might want to check him out." % username,
+         #"high")
     elif pain_anomalies(username) != []:
-        Notifications.add("An anomaly was reported with %s, you might want to check him out." % username,
-                          "high")
+        #Notifications.add("An anomaly was reported with %s, you might want to check him out." % username,
+         #                 "high")
+        pass
     else:
         Notifications.add("%s filled in a pain report" % username,  "medium")
     return json.dumps({})  # need to return something ...

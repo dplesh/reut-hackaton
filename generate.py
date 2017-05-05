@@ -9,7 +9,7 @@ def generate_normal_samples():
     with open("db.json", "r") as db:
         olddbbdict = json.load(db)
 
-    phys = olddbbdict["phy"]
+    phys = olddbbdict["phys"]
     meds = olddbbdict["meds"]
     pains = olddbbdict["pain"]
     sos = olddbbdict["sos"]
@@ -27,7 +27,7 @@ def generate_normal_samples():
         dict_add = {}
         dict_add["username"] = "mikel"
 
-        body_parts = ["hand", "sholder", "leg", "feet", "head", "back", "belly", "neck"]
+        body_parts = ["hand", "shoulder", "leg", "feet", "head", "back", "belly", "neck"]
         hurt_body_parts = []
         for i in xrange(random.randint(1, 3)):
             hurt_body_parts.append(body_parts[random.randint(0, len(body_parts) - 1)])
@@ -42,7 +42,7 @@ def generate_normal_samples():
         context_list = ["Sports", "Temperature Change", "Anger", "Bad Mood", "Nothing"]
         dict_add["context"] = context_list[random.randint(0, len(context_list) - 1)]
 
-        type_list = ["burn", "shrp", "bombing"]
+        type_list = ["burn", "sharp", "bombing"]
         dict_add["type"] = type_list[random.randint(0, len(type_list) - 1)]
 
         if random.randint(1, 20) == 20:
@@ -62,6 +62,7 @@ def generate_normal_samples():
 
         pain_level = pain_level + 1 - random.randint(0, 2)
         new_pains.append(dict_add)
+
 
     new_db = {"phys": phys, "meds": meds, "pain": new_pains, "sos": sos, "ano": ano}
 
@@ -184,4 +185,4 @@ def create_pain_anomaly():
     with open("db1.json", "w") as db:
         json.dump(new_db, db)
 
-create_pain_anomaly()
+generate_normal_samples()
