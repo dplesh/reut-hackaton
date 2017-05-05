@@ -1,5 +1,5 @@
 angular.module('doctorApp')
-    .controller('painDiaryController', ['$scope', 'Reports', 'MedsTasks', function ($scope, Reports, MedsTasks) {
+    .controller('painDiaryController', ['$scope', 'Reports', 'MedsTasks', '$routeParams', function ($scope, Reports, MedsTasks, $routeParams) {
 
         $scope.reports = [];
 
@@ -147,7 +147,7 @@ angular.module('doctorApp')
         };
 
         MedsTasks.get({
-            userName: 'Mikel'
+            userName: $routeParams.user
         }).$promise.then(function (response) {
             medsTasks = response.data;
             takenMedsTime = [];
@@ -162,7 +162,7 @@ angular.module('doctorApp')
         });
 
         Reports.get({
-            userName: 'Mikel'
+            userName: $routeParams.user
         }).$promise.then(function (response) {
             $scope.reports = response.data;
 
