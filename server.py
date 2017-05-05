@@ -2,7 +2,7 @@
 
 import json
 
-from dateutil.parser import parser
+from dateutil import parser
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from juggernaut import Juggernaut
@@ -77,25 +77,74 @@ def pain_anomalies(username):
         dbdict = json.load(dbfile)
 
     pain_events = [obj for obj in dbdict["pain"] if obj["username"].lower() == username.lower()]
-    pain_events.sort(key=lambda x: parser.parse(x.date))
+    pain_events.sort(key=lambda x: x["date"])
 
     while index < len(pain_events) - 2:
         anomaly = {}
         #if a three point decrease is found, check the size of the ouchy.
-        if pain_events[index].level < pain_events[index+1].level and pain_events[index + 1].level < pain_events[index + 2].level:
-            anomaly["startWorseningTime"] = pain_events[index].date
+        if pain_events[index]["level"] < pain_events[index+1]["level"] and pain_events[index + 1]["level"] < pain_events[index + 2]["level"]:
+            anomaly["startWorseningTime"] = pain_events[index]["date"]
             end_index = index+2
             while end_index < len(pain_events) - 1:
-                if pain_events[end_index].level < pain_events[end_index+1].level:
+                if pain_events[end_index]["level"] < pain_events[end_index+1]["level"]:
                     end_index+=1
                 else:
-                    anomaly["endWorseningTime"] = pain_events[end_index].date
-                    index = end_index
-                    anomalies.append(anomaly)
                     break
+            anomaly["endWorseningTime"] = pain_events[end_index]["date"]
+            anomalies.append(anomaly)
+            index = end_index
         index+=1
+    return json.dumps({"data": anomalies})
 
-    return anomalies
+def there_is_anomaly(username):
+    anomalies = []
+    index = 0
+    with open('db.json', 'r') as dbfile:
+        dbdict = json.load(dbfile)
+
+    pain_events = [obj for obj in dbdict["pain"] if obj["username"].lower() == username.lower()]
+    pain_events.sort(key=lambda x: x["date"])
+
+    while index < len(pain_events) - 2:
+        anomaly = {}
+        # if a three point decrease is found, check the size of the ouchy.
+        if pain_events[index]["level"] < pain_events[index + 1]["level"] and pain_events[index + 1]["level"] < \
+                pain_events[index + 2]["level"]:
+            anomaly["startWorseningTime"] = pain_events[index]["date"]
+            end_index = index + 2
+            while end_index < len(pain_events) - 1:
+                if pain_events[end_index]["level"] < pain_events[end_index + 1]["level"]:
+                    end_index += 1
+                else:
+                    break
+            anomaly["endWorseningTime"] = pain_events[end_index]["date"]
+            anomalies.append(anomaly)
+            index = end_index
+        index += 1
+
+    return anomalies != []
+
+def is_sos_three_days_in_a_row(curr_index, sos_events):
+
+    current_sos = parser.parse(sos_events[curr_index]["time_taken"])
+    next_sos = parser.parse(sos_events[curr_index+1]["time_taken"])
+    next_next_sos = parser.parse(sos_events[curr_index+2]["time_taken"])
+    sum = 0
+    if current_sos.year == next_sos.year and current_sos.year == next_next_sos.year:
+        if current_sos.month== next_sos.month and current_sos.month== next_next_sos.month:
+
+            sum += next_sos.day - current_sos.day
+            sum += next_next_sos.day - next_sos.day
+            return sum <= 2
+    return False
+
+def is_sos_tommorow(curr_index, sos_events):
+    current_sos = parser.parse(sos_events[curr_index]["time_taken"])
+    next_sos = parser.parse(sos_events[curr_index + 1]["time_taken"])
+    if current_sos.year == next_sos.year:
+        if current_sos.month== next_sos.month:
+            return next_sos.day - current_sos.day <= 1
+    return False
 
 @app.route('/<username>/sos_anomalies')
 def sos_anomalies(username):
@@ -105,12 +154,24 @@ def sos_anomalies(username):
         dbdict = json.load(dbfile)
 
     sos_events = [obj for obj in dbdict["sos"] if obj["username"].lower() == username.lower()]
-    sos_events.sort(key=lambda x: parser.parse(x.date))
+    sos_events.sort(key=lambda x: x["time_taken"])
 
     while index < len(sos_events) - 2:
-        # bla
-        pass
-    return anomalies
+        anomaly = {}
+        # if a three point decrease is found, check the size of the ouchy.
+        if is_sos_three_days_in_a_row(index, sos_events):
+            anomaly["startWorseningTime"] = sos_events[index]["time_taken"]
+            end_index = index + 2
+            while end_index < len(sos_events) - 1:
+                if is_sos_tommorow(end_index, sos_events):
+                    end_index += 1
+                else:
+                    break
+            anomaly["endWorseningTime"] = sos_events[end_index]["time_taken"]
+            anomalies.append(anomaly)
+            index = end_index
+        index += 1
+    return json.dumps({"data": anomalies})
 
 @app.route('/<username>/sos')
 def sos(username):
@@ -118,7 +179,7 @@ def sos(username):
         dbdict = json.load(dbfile)
 
     sos_events = [obj for obj in dbdict["sos"] if obj["username"].lower() == username.lower()]
-    sos_events.sort(key=lambda x: parser.parse(x.date))
+    sos_events.sort(key=lambda x: x["date"])
     return json.dumps({"data":sos_events})
 
 @app.route('/<username>/pain')
@@ -165,7 +226,7 @@ def handle_report(username):
 
     assert request.method == 'POST'
     save_report_to_the_db(request.form["report"])
-    if there_is_anomaly():
+    if there_is_anomaly(username):
         Notifications.add("An anomaly was reported with %s, you might want to check him out." % username, 
          "high")
     else:
@@ -175,6 +236,3 @@ def handle_report(username):
 
 def save_report_to_the_db(report):
     print "Saving Report to the DB......"  # change this
-
-def there_is_anomaly():
-    return True # change this
