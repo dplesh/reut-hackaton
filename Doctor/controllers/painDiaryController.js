@@ -1,5 +1,5 @@
 angular.module('doctorApp')
-    .controller('painDiaryController', ['$scope', 'Reports', function ($scope, Reports) {
+    .controller('painDiaryController', ['$scope', 'Reports', 'MedsTasks', function ($scope, Reports, MedsTasks) {
 
         $scope.reports = [];
 
@@ -10,7 +10,7 @@ angular.module('doctorApp')
             height: 450,
             width: 1000,
             yaxis: {
-                range: [0, 10]
+                range: [0, 10.5]
             },
             legend: {
                 y: 0.5,
@@ -24,10 +24,12 @@ angular.module('doctorApp')
         };
 
         var reportsTimes = [];
-
         var reportsPainValues = [];
-
         var texts = [];
+
+
+        var takenMedsTime = [];
+        var unTakenMedsTimes = [];
 
         UpdatePainGraph = function (newReports) {
             newReportsPainValues = newReports.map(function (report) {
@@ -45,18 +47,90 @@ angular.module('doctorApp')
 
         };
 
+        GetSortedTimes = function (timesToSort) {
+            var sorted = JSON.parse(JSON.stringify(timesToSort));
+            sorted.sort();
+            return sorted;
+        }
+
+        GetClosestTime = function (times, time) {
+            let sortedTimes = GetSortedTimes(times);
+
+            for (var i = 0; i < times.length - 1; i++) {
+                if (sortedTimes[i] <= time && time <= sortedTimes[i + 1]) {
+                    return [sortedTimes[i], sortedTimes[i + 1]]
+                }
+            }
+            console.log("shemesh is a liar");
+
+
+        }
+
+        GetPainPointY = function (time) {
+            index = reportsTimes.indexOf(time);
+            return reportsPainValues[index];
+        }
+
+        GetPainByTime = function (time) {
+            if (reportsTimes.includes(time)) {
+                return GetPainPointY(time);
+            } else {
+                let closestTimes = GetClosestTime(reportsTimes, time);
+                let x = new Date(time).getTime();
+                let x1 = new Date(closestTimes[0]).getTime();
+                let x2 = new Date(closestTimes[1]).getTime();
+                let y1 = GetPainPointY(closestTimes[0]);
+                let y2 = GetPainPointY(closestTimes[1]);
+                return (y1 - y2) / (x1 - x2) * (x - x1) + y1;
+            }
+        };
+
+
+        GetPainValues = function (times) {
+            return times.map(function (time) {
+                return GetPainByTime(time);
+            });
+        };
+
         CreatePainReportsGraph = function () {
-            var trace1 = {
+            var painTrace = {
                 x: reportsTimes,
                 y: reportsPainValues,
                 text: texts,
                 mode: 'lines+markers',
-                name: 'Pain'
+                name: 'Pain',
+                marker: {
+                    size: 11
+                }
             };
 
-            var data = [trace1];
+            let takenMedsValues = GetPainValues(takenMedsTime);
+            var takenMedsTrace = {
+                x: takenMedsTime,
+                y: takenMedsValues,
+                mode: 'markers',
+                name: 'Taken Meds',
+                marker: {
+                    color: 'rgb(0, 102, 0)',
+                    size: 11
+                }
+            };
 
-            Plotly.newPlot(divName, data, layout);
+            let unTakenMedsValues = GetPainValues(unTakenMedsTimes);
+            var unTakenMedsTrace = {
+                x: unTakenMedsTimes,
+                y: unTakenMedsValues,
+                mode: 'markers',
+                name: 'Un Taken Meds',
+                marker: {
+                    color: 'rgb(153, 0, 0)',
+                    size: 11
+                }
+            };
+
+            var data = [painTrace, takenMedsTrace, unTakenMedsTrace];
+
+            var a = Plotly.newPlot(divName, data, layout);
         };
 
         GetReportText = function (report) {
@@ -66,6 +140,21 @@ angular.module('doctorApp')
                 "Pain place: " + report.body_parts.toString() + "<br>" +
                 "Pain duration: " + report.duration + " minutes";
         };
+
+        MedsTasks.get({
+            userName: 'Mikel'
+        }).$promise.then(function (response) {
+            medsTasks = response.data;
+            takenMedsTime = [];
+            unTakenMedsTimes = [];
+            for (var i = 0, len = medsTasks.length; i < len; i++) {
+                if (medsTasks[i].timeTaken != "0") {
+                    takenMedsTime.push(medsTasks[i].timeTaken);
+                } else {
+                    unTakenMedsTimes.push(medsTasks[i].timeNeeded);
+                }
+            }
+        });
 
         Reports.get({
             userName: 'Mikel'
@@ -84,19 +173,7 @@ angular.module('doctorApp')
                 return GetReportText(report);
             });
             CreatePainReportsGraph(response.data, reportsTimes, reportsPainValues);
-            /*setTimeout(function () {
-                UpdatePainGraph([{
-                    "body_parts": ["leg", "hand"],
-                    "date": "2017-05-12 16:05:46.694339",
-                    "level": 6,
-                    "duration": "9",
-                    "context": "Sports",
-                    "type": ["burn", "sharp"],
-                    "was_sos_med": false,
-                    "influences": "Couldn't walk...",
-                    "mood": "depressed"
-                }]);
-            }, 10000);*/
+
 
         });
     }]);
