@@ -7,16 +7,14 @@ app.config(function ($routeProvider, $locationProvider) {
             controller: 'userController'
         })
         .when('/home', {
-            templateUrl: './views/home.html',
-            controller: 'mainController'
+            templateUrl: './views/home.html'
         })
-        .when('/painDiary', {
+        .when('/painDiary/:user', {
             templateUrl: './views/painDiary.html',
             controller: 'painDiaryController'
         })
         .when('/', {
-            templateUrl: './views/home.html',
-            controller: 'mainController'
+            templateUrl: './views/home.html'
         })
         .when('/notifications', {
             templateUrl: './views/notifications.html',
@@ -24,7 +22,7 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .otherwise({
             templateUrl: './views/home.html',
-            controller: 'mainController'
+            
         });
 
     $locationProvider.html5Mode({

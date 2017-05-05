@@ -4,7 +4,7 @@
 
 <head>
 
-<title>דוקטור תציל אותי</title>
+<title>אני מאוהב כואב לי בחזה</title>
 
 <script src="./js/angular.js"> </script>
 <script src="./js/angular-animate.js"> </script>
@@ -26,52 +26,11 @@
 <script src="./controllers/searchController.js"> </script>
 <script src="./services/notificationService.js"> </script>
 <script src="./controllers/notificationController.js"> </script>
-
+<script src="./services/medsTasks.js"></script>
 <link rel="stylesheet" href="./css/main.css"/>
 <link rel="stylesheet" href="./css/angular-material.css"/>
 <link rel="stylesheet" href="./css/bootstrap-3.3.7-dist/css/bootstrap.css"/>
 
-<script>
-
-// request permission on page load
-document.addEventListener('DOMContentLoaded', function () {
-  if (!Notification) {
-    alert('Desktop notifications not available in your browser. Try Chromium.'); 
-    return;
-  }
-
-  if (Notification.permission !== "granted")
-    Notification.requestPermission();
-});
-
-function notifyMe(title, text, url_to_open) {
-  if (Notification.permission !== "granted")
-    Notification.requestPermission();
-  else {
-    var notification = new Notification(title, {
-      icon: 'images/reut.png',
-      body: text,
-    });
-
-    notification.onclick = function () {
-      window.open(url_to_open);      
-    };
-
-  }
-
-}
-
-document.onkeypress = function (e) {
-    e = e || window.event;
-        console.log("pressed :" + e.keyCode);
-
-        if (e.keyCode == 96 || e.keyCode == 59) { 
-          notifyMe("Dan is not feeling well", "An anomaly was found in Dan's pain reports. You better check in on him.", "google.com");
-        }
-
-};
-
-</script
 </head>
 
 <body ng-controller="mainController">
@@ -81,7 +40,6 @@ document.onkeypress = function (e) {
       md-selected-nav-item="currentNavItem"
       nav-bar-aria-label="navigation links">
       <md-nav-item md-nav-href="#!/" name="page1">Home</md-nav-item>
-      <md-nav-item md-nav-href="#!/user" name="page2">User</md-nav-item>
       <md-nav-item md-nav-href="#!/painDiary" name="painDiaryPage">Pain Diary</md-nav-item>
       <md-nav-item md-nav-href="#!/notifications" name="notificationsPage">Notifications</md-nav-item>
       <div ng-controller="searchController as ctrl" layout="column" ng-cloak="" class="autocompletedemoBasicUsage">
