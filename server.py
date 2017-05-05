@@ -1,6 +1,8 @@
 
 
 import json
+
+from dateutil.parser import parser
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from juggernaut import Juggernaut
@@ -34,8 +36,20 @@ pass  # Implemented on generate.py
 
 class Notifications(object):
     _list = []
+    running_id = 0
+    @classmethod
+    def add(cls, message, severity):
+        cls._list.append({"id": cls.running_id, "isRead": "false",
+        "message": message, "severity": severity})
 
+        cls.running_id += 1
 
+    running_id += 1
+    @classmethod
+    def mark_read(cls, id):
+        for notif in cls._list:
+            if str(notif["id"]) == str(id):
+                notif["isRead"] = "true"
 
 @app.route('/<username>/meds')
 def meds(username):
@@ -55,19 +69,57 @@ def phy(username):
     matching = [obj for obj in dbdict["phy"] if obj["username"].lower() == username.lower()]
     return json.dumps({"data": matching})
 
-
-
-@app.route('/<username>/anomalies')
-def anomalies(username):
+@app.route('/<username>/pain_anomalies')
+def pain_anomalies(username):
+    anomalies = []
+    index = 0
     with open('db.json','r') as dbfile:
         dbdict = json.load(dbfile)
 
-    return "meow"
+    pain_events = [obj for obj in dbdict["pain"] if obj["username"].lower() == username.lower()]
+    pain_events.sort(key=lambda x: parser.parse(x.date))
 
+    while index < len(pain_events) - 2:
+        anomaly = {}
+        #if a three point decrease is found, check the size of the ouchy.
+        if pain_events[index].level < pain_events[index+1].level and pain_events[index + 1].level < pain_events[index + 2].level:
+            anomaly["startWorseningTime"] = pain_events[index].date
+            end_index = index+2
+            while end_index < len(pain_events) - 1:
+                if pain_events[end_index].level < pain_events[end_index+1].level:
+                    end_index+=1
+                else:
+                    anomaly["endWorseningTime"] = pain_events[end_index].date
+                    index = end_index
+                    anomalies.append(anomaly)
+                    break
+        index+=1
+
+    return anomalies
+
+@app.route('/<username>/sos_anomalies')
+def sos_anomalies(username):
+    anomalies = []
+    index = 0
+    with open('db.json','r') as dbfile:
+        dbdict = json.load(dbfile)
+
+    sos_events = [obj for obj in dbdict["sos"] if obj["username"].lower() == username.lower()]
+    sos_events.sort(key=lambda x: parser.parse(x.date))
+
+    while index < len(sos_events) - 2:
+        # bla
+        pass
+    return anomalies
 
 @app.route('/<username>/sos')
 def sos(username):
-    return "meow"
+    with open('db.json', 'r') as dbfile:
+        dbdict = json.load(dbfile)
+
+    sos_events = [obj for obj in dbdict["sos"] if obj["username"].lower() == username.lower()]
+    sos_events.sort(key=lambda x: parser.parse(x.date))
+    return json.dumps({"data":sos_events})
 
 @app.route('/<username>/pain')
 def pain(username):
@@ -91,9 +143,19 @@ def users():
 
 @app.route('/notifications')
 def notifications():
-    notif = Notifications._list[:] # if u want other notif mecha change this
-    Notifications._list = []
-    return json.dumps(notif)
+    return json.dumps(Notifications._list)
+
+@app.route("/readnotif", methods=['POST'])
+def read_notif():
+
+    #  wget --post-data "id=1" http://localhost:5000/????/report/pain
+
+
+    assert request.method == 'POST'
+    id = request.form["id"]
+    Notifications.mark_read(id)
+    return json.dumps({})  # need to return something ...
+
 
 @app.route("/<username>/report/pain", methods=['POST'])
 def handle_report(username):
@@ -104,7 +166,10 @@ def handle_report(username):
     assert request.method == 'POST'
     save_report_to_the_db(request.form["report"])
     if there_is_anomaly():
-        Notifications._list.append(username) # change this
+        Notifications.add("An anomaly was reported with %s, you might want to check him out." % username, 
+         "high")
+    else:
+        Notifications.add("%s filled in a pain report" % username,  "medium")
     return json.dumps({})  # need to return something ...
 
 

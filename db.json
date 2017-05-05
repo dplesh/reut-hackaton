@@ -2,9 +2,21 @@
   "meds": [
     {
       "username": "Mikel",
-      "timeNeeded": "10",
+      "timeNeeded": "2017-05-04 20:08:53.142406",
       "med_name": "Ritalin",
-      "timeTaken": "7"
+      "timeTaken": "0"
+    },
+    {
+      "username": "Mikel",
+      "timeNeeded": "2017-05-05 20:08:53.142406",
+      "med_name": "Ritalin",
+      "timeTaken": "2017-05-05 20:08:53.142407"
+    },
+    {
+      "username": "Mikel",
+      "timeNeeded": "2017-05-06 20:08:53.142406",
+      "med_name": "akamoli-kidz",
+      "timeTaken": "2017-05-06 20:08:53.142406"
     }
   ],
   "phy": [
@@ -28,9 +40,8 @@
   "sos": [
     {
       "username": "Mikel",
-      "startTime" : "2017-05-04 22:00:00.142406",
-      "endTime":"2017-05-04 22:06:53.142406",
-      "notes":"Use some cannabis due to severe pain..."
+      "time_taken" : "2017-05-04 22:00:00.142406",
+      "notes":"Used some cannabis felt 420 pain in vas..."
     }
   ],
   "pain": [{
