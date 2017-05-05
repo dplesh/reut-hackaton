@@ -11,13 +11,13 @@ angular.module('doctorApp')
 
         self.goToUser = function (keyEvent) {
             if (keyEvent.which === 13)
-                if (self.selectedItem){
+                if (self.selectedItem) {
                     goToUser(self.selectedItem);
                 }
         }
 
-        let goToUser = function(user){
-            $location.path("/user/" + user.value.id);
+        let goToUser = function (user) {
+            $location.path("/user/" + user.value);
         }
 
         // ******************************
@@ -35,14 +35,21 @@ angular.module('doctorApp')
                     value: ''
                 }];
             }
-            var results = userService.findUsersByName(query);
-            if (results.length == 0) {
-                return [{
-                    display: 'No patient found',
-                    value: ''
-                }];
-            }
-            return results;
+            return userService.findUsersByName(query).then((users) => {
+                    if (users.length == 0) {
+                        return [{
+                            display: 'No patient found',
+                            value: ''
+                        }];
+                    }
+                    return users;
+                })
+                .catch((err) => {
+                    return [{
+                        display: 'No patient found',
+                        value: ''
+                    }];
+                });
         }
 
 
