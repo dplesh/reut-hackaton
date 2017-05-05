@@ -1,19 +1,26 @@
 angular.module('doctorApp')
     .controller('mainController', ['$scope', '$interval', '$http', function ($scope, $interval, $http) {
         let lastPolledNotifications = [];
-
+        let firstPollMade = false;
         let getNotifications = function () {
             return $http({
                 method: 'GET',
-                url: 'http://localhost:5000/notifications'
+                url: 'http://172.22.5.241:5000/notifications'
             }).then(function successCallback(response) {
-                let newNotifications = response.data.filter(function(x){
+                let newNotifications = response.data.filter(function (x) {
                     return x.isRead == 'false';
                 });
                 let notificationDiff = getNotificationDiff(newNotifications, lastPolledNotifications);
-                for (let notification of notificationDiff) {
-                    notifyMe("New notification received", notification.message, "#!/notifications");
-                    console.log("New notiication rececived!");
+                if (!firstPollMade) {
+                    firstPollMade = true;
+                    if (notificationDiff.length > 0) {
+                         notifyMe("New notifications received", "You have new notifications waiting for you.", "#!/notifications");
+                    }
+                } else {
+                    for (let notification of notificationDiff) {
+                        notifyMe("New notification received", notification.message, "#!/notifications");
+                        console.log("New notiication rececived!");
+                    }
                 }
                 lastPolledNotifications = newNotifications;
             });
@@ -30,14 +37,14 @@ angular.module('doctorApp')
                         break;
                     }
                 }
-                if (!notificationFound){
+                if (!notificationFound) {
                     result.push(notification1);
                 }
             }
             return result;
         }
 
-        setInterval(getNotifications, 3000);
+        setInterval(getNotifications, 10000);
         $scope.currentNavItem = 'page1';
 
         //Internal, black box Danelkis functions

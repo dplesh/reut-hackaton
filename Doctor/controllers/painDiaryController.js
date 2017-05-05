@@ -1,6 +1,6 @@
 angular.module('doctorApp')
-    .controller('painDiaryController', ['$scope', 'Reports', 'MedsTasks', 'PainAnomas', 'SosAnomas', 'Sos',
-        function ($scope, Reports, MedsTasks, PainAnomas, SosAnomas, Sos) {
+    .controller('painDiaryController', ['$scope', 'Reports', 'MedsTasks', 'PainAnomas', 'SosAnomas', 'Sos', '$routeParams',
+        function ($scope, Reports, MedsTasks, PainAnomas, SosAnomas, Sos, $routeParams) {
 
             $scope.reports = [];
             var sosAnomas = [];
@@ -9,7 +9,7 @@ angular.module('doctorApp')
             var divName = 'myDiv';
 
             var layout = {
-                title: 'Pain Diary',
+                title: ($routeParams.user +'\'s Pain Diary'),
                 height: 500,
                 width: 1000,
                 yaxis: {
@@ -191,7 +191,7 @@ angular.module('doctorApp')
                         mode: 'markers+lines',
                         name: 'SOS anomality ' + (i + 1),
                         marker: {
-                            color: 'rgb(122, 122,122)',
+                            color: 'rgb(255, 127,0)',
                             size: 11
                         }
                     };
@@ -212,7 +212,7 @@ angular.module('doctorApp')
             };
 
             Sos.get({
-                userName: 'Mikel'
+                userName: $routeParams.user
             }).$promise.then(function (response) {
                 sosTimes = response.data.map(function (sos) {
                     return sos.time_taken;
@@ -220,19 +220,19 @@ angular.module('doctorApp')
             });
 
             SosAnomas.get({
-                userName: 'Mikel'
+                userName: $routeParams.user
             }).$promise.then(function (response) {
                 sosAnomas = response.data;
             });
 
             PainAnomas.get({
-                userName: 'Mikel'
+                userName: $routeParams.user
             }).$promise.then(function (response) {
                 painAnomas = response.data;
             });
 
             MedsTasks.get({
-                userName: 'Mikel'
+                userName: $routeParams.user
             }).$promise.then(function (response) {
                 medsTasks = response.data;
                 takenMedsTime = [];
@@ -252,7 +252,7 @@ angular.module('doctorApp')
             });
 
             Reports.get({
-                userName: 'Mikel'
+                userName: $routeParams.user
             }).$promise.then(function (response) {
                 response.data.sort(function (a, b) {
                     // Compare the 2 dates

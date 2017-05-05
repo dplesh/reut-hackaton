@@ -5,9 +5,8 @@ angular.module('doctorApp')
         var getNotifications = function () {
             $http({
                     method: 'GET',
-                    url: 'http://localhost:5000/notifications'
+                    url: 'http://172.22.5.241:5000/notifications'
                 }).then(function successCallback(response) {
-                    console.log(response);
                     let newNotifications = [];
                     if (response.data) {
                         newNotifications = response.data.filter(function (x) {
@@ -23,7 +22,7 @@ angular.module('doctorApp')
         }
         getNotifications();
         setInterval(
-            getNotifications, 3000);
+            getNotifications, 10000);
 
 
 
