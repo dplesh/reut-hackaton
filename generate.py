@@ -1,10 +1,10 @@
 import time
 import json
 import random
-from datetime import datetime, timedelta
-
+from datetime import  datetime, timedelta
 
 def generate_normal_samples():
+
     sample_list = []
     with open("db.json", "r") as db:
         olddbbdict = json.load(db)
@@ -15,13 +15,13 @@ def generate_normal_samples():
     sos = olddbbdict["sos"]
     ano = olddbbdict["ano"]
 
-    pain_level = random.randint(0, 6)
-    initial_date = datetime.today() - timedelta(days=random.randint(5, 7)
-                                                , minutes=random.randint(6, 19)
-                                                , seconds=random.randint(13, 31))
-
+    pain_level = random.randint(0,6)
+    initial_date = datetime.today() - timedelta(days=random.randint(5,7)
+                                                ,minutes=random.randint(6,19)
+                                                ,seconds=random.randint(13,31))
+												
     new_pains = []
-
+												
     while initial_date < datetime.now():
 
         dict_add = {}
@@ -184,5 +184,3 @@ def create_pain_anomaly():
     print "Im printing"
     with open("db1.json", "w") as db:
         json.dump(new_db, db)
-
-generate_normal_samples()
