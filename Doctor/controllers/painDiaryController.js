@@ -35,6 +35,8 @@ angular.module('doctorApp')
             var reportsPainValues = [];
             var texts = [];
 
+            var takenMedsTexts = [];
+            var unTakenMedsTexts = [];
 
             var takenMedsTime = [];
             var unTakenMedsTimes = [];
@@ -120,7 +122,8 @@ angular.module('doctorApp')
                     mode: 'lines+markers',
                     name: 'Pain',
                     marker: {
-                        size: 11
+                        color: 'rgb(127, 127, 127)',
+                        size: 10
                     }
                 };
 
@@ -128,6 +131,7 @@ angular.module('doctorApp')
                 var takenMedsTrace = {
                     x: takenMedsTime,
                     y: takenMedsValues,
+                    text: takenMedsTexts,
                     mode: 'markers',
                     name: 'Taken Meds',
                     marker: {
@@ -140,6 +144,7 @@ angular.module('doctorApp')
                 var unTakenMedsTrace = {
                     x: unTakenMedsTimes,
                     y: unTakenMedsValues,
+                    text: unTakenMedsTexts,
                     mode: 'markers',
                     name: 'Un Taken Meds',
                     marker: {
@@ -160,7 +165,7 @@ angular.module('doctorApp')
                     }
                 };
 
-                var data = [painTrace, takenMedsTrace, unTakenMedsTrace,sosTrace];
+                var data = [painTrace, takenMedsTrace, unTakenMedsTrace, sosTrace];
                 for (var i = 0, len = painAnomas.length; i < len; i++) {
                     let painAnomasTimes = GetTimesBetweenPoints(painAnomas[i].startWorseningTime, painAnomas[i].endWorseningTime)
                     let values = GetPainValues(painAnomasTimes);
@@ -231,12 +236,17 @@ angular.module('doctorApp')
             }).$promise.then(function (response) {
                 medsTasks = response.data;
                 takenMedsTime = [];
+                takenMedsTexts = [];
+                unTakenMedsTexts = [];
+
                 unTakenMedsTimes = [];
                 for (var i = 0, len = medsTasks.length; i < len; i++) {
                     if (medsTasks[i].timeTaken != "0") {
                         takenMedsTime.push(medsTasks[i].timeTaken);
+                        takenMedsTexts.push(medsTasks[i].med_name)
                     } else {
                         unTakenMedsTimes.push(medsTasks[i].timeNeeded);
+                        unTakenMedsTexts.push(medsTasks[i].med_name)
                     }
                 }
             });
