@@ -5,7 +5,7 @@ angular.module('doctorApp')
         let getNotifications = function () {
             return $http({
                 method: 'GET',
-                url: 'http://172.22.5.241:5000/notifications'
+                url: 'http://localhost:5000/notifications'
             }).then(function successCallback(response) {
                 let newNotifications = response.data.filter(function(x){
                     return x.isRead == 'false';

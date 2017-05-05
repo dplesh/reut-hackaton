@@ -160,7 +160,7 @@ angular.module('doctorApp')
                     }
                 };
 
-                var data = [painTrace, takenMedsTrace, unTakenMedsTrace, sosTrace];
+                var data = [painTrace, takenMedsTrace, unTakenMedsTrace,sosTrace];
                 for (var i = 0, len = painAnomas.length; i < len; i++) {
                     let painAnomasTimes = GetTimesBetweenPoints(painAnomas[i].startWorseningTime, painAnomas[i].endWorseningTime)
                     let values = GetPainValues(painAnomasTimes);
@@ -212,7 +212,6 @@ angular.module('doctorApp')
                 sosTimes = response.data.map(function (sos) {
                     return sos.time_taken;
                 });
-
             });
 
             SosAnomas.get({

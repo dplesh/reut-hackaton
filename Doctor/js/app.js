@@ -9,7 +9,7 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/home', {
             templateUrl: './views/home.html'
         })
-        .when('/painDiary/:user', {
+        .when('/painDiary', {
             templateUrl: './views/painDiary.html',
             controller: 'painDiaryController'
         })
