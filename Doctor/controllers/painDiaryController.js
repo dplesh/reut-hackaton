@@ -7,8 +7,8 @@ angular.module('doctorApp')
 
         var layout = {
             title: 'Pain Diary',
-            height: 450,
-            width: 1000,
+            height: 600,
+            width: 1100,
             yaxis: {
                 range: [0, 10.5]
             },
@@ -164,8 +164,14 @@ angular.module('doctorApp')
         Reports.get({
             userName: 'Mikel'
         }).$promise.then(function (response) {
-            $scope.reports = response.data;
+            response.data.sort(function (a, b) {
+                // Compare the 2 dates
+                if (a.date < b.date) return -1;
+                if (a.date > b.date) return 1;
+                return 0;
+            });
 
+            $scope.reports = response.data;
             reportsPainValues = $scope.reports.map(function (report) {
                 return report.level;
             });
