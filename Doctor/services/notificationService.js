@@ -40,7 +40,7 @@ angular.module('doctorApp')
         }
 
         this.markNotificationAsRead = function (notificationId) {
-            var url ='http://localhost:5000/readnotif/' + notificationId;
+            var url ='http://172.22.5.241:5000/readnotif/' + notificationId;
             console.log(url);
             $http.get(url).then(() => {});
         }
