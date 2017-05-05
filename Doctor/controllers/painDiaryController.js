@@ -12,6 +12,11 @@ angular.module('doctorApp')
             yaxis: {
                 range: [0, 10.5]
             },
+            font: {
+                family: 'Courier New, monospace',
+                size: 18,
+                color: '#7f7f7f'
+            },
             legend: {
                 y: 0.5,
                 yref: 'paper',
