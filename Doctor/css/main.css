@@ -1,5 +1,5 @@
 md-content .ext-content {
-  padding: 50px;
+  padding: 20px;
   margin: 20px;
   background-color: rgb(230, 230, 230); 
   border-radius: 1em;
@@ -10,4 +10,28 @@ md-content .ext-content {
   border: solid 2px #e4e4e4;
   padding: 0 !important;
   margin: 0 !important;
+}
+
+.notification {
+
+}
+
+.alert{
+  margin-bottom: 10px !important;
+}
+
+.alert-warning {
+    color: #8a6d3b !important;
+    background-color: rgb(255, 233, 150) !important;
+    border-color: rgb(210, 190, 110) !important;
+}
+
+.alert-danger {
+    color: #a94442 !important;
+    background-color: #ff9d9d !important;
+    border-color: #a56e6e !important;
+}
+
+.header{
+  text-transform: uppercase;
 }

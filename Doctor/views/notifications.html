@@ -1,0 +1,21 @@
+<div ng-controller="notificationController as controller">
+    <h3 class="header">Unread Notifications</h3>
+    <ul>
+        <div ng-repeat="notification in controller.notifications" class="notification">
+            <div 
+            ng-class="{low:'alert-info', medium:'alert-warning', 'high':'alert-danger'}[notification.severity]"
+            class="alert alert-dismissable">
+                {{notification.message}}
+                  <a ng-click="controller.markNotificationAsRead(notification)" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+        </div>
+        <div ng-show="!controller.isNotificationsPresent()">
+            <div 
+            class="alert">
+                No unread notifications present.
+            </div>
+        </div>
+
+    </ul>
+    </div>
+</div>
