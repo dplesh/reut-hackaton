@@ -14,15 +14,17 @@ app.config(function ($routeProvider, $locationProvider) {
             controller: 'painDiaryController'
         })
         .when('/', {
-            templateUrl: './views/home.html'
+            templateUrl: './views/notifications.html',
+            controller: 'notificationController'
         })
         .when('/notifications', {
             templateUrl: './views/notifications.html',
             controller: 'notificationController'
         })
         .otherwise({
-            templateUrl: './views/home.html',
-            
+            templateUrl: './views/notifications.html',
+            controller: 'notificationController'
+
         });
 
     $locationProvider.html5Mode({
