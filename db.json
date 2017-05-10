@@ -10,43 +10,286 @@
       "username": "Mikel",
       "timeNeeded": "2017-05-05 20:08:53.142406",
       "med_name": "Ritalin",
-      "timeTaken": "2017-05-05 20:08:53.142407"
+      "timeNeeded": "2017-05-06 20:07:53.142406",
+      "timeTaken": "2017-05-06 20:07:53.142407"
     },
     {
       "username": "Mikel",
-      "timeNeeded": "2017-05-06 20:08:53.142406",
-      "med_name": "akamoli-kidz",
-      "timeTaken": "2017-05-06 20:08:53.142406"
-    }
-  ],
-  "phy": [
-    {
-        "username": "Mikel",
-        "notes" : "Hello world",
-        "timeNeeded" : "7",
-        "type" : "Severe",
-        "timeDone" : "14"
-
-    }
-  ],
-  "ano": [
+      "med_name": "Neurophen",
+      "timeNeeded": "2017-05-15 20:07:53.142406",
+      "timeTaken": "2017-05-15 20:07:53.142407"
+    },
     {
       "username": "Mikel",
-      "startWorseningTime" : "2017-05-04 20:08:53.142406",
-      "endWorseningTime" : "2017-05-04 22:06:53.142406",
-      "notes" : "I made some physical activity..."
+      "med_name": "Neurophen",
+      "timeNeeded": "2017-05-18 20:07:53.142406",
+      "timeTaken": "2017-05-18 20:07:53.142407"
+    },
+    {
+      "username": "Mikel",
+      "med_name": "Akamoli",
+      "timeNeeded": "2017-05-21 20:07:53.142406",
+      "timeTaken": "2017-05-21 20:07:53.142407"
+    },
+    {
+      "username": "Mikel",
+      "med_name": "Akamoli",
+      "timeNeeded": "2017-05-24 20:07:53.142406",
+      "timeTaken": "2017-05-24 20:07:53.142407"
+    },
+    {
+      "username": "Mikel",
+      "med_name": "Neurophen",
+      "timeNeeded": "2017-05-20 20:07:53.142406",
+      "timeTaken": "2017-05-20 20:07:53.142407"
+    },
+    {
+      "username": "Mikel",
+      "med_name": "akamoli-kidz",
+      "timeNeeded": "2017-05-28 20:08:53.142406",
+      "timeTaken": "0"
+    },
+    {
+      "username": "Mikel",
+      "med_name": "Ritalin",
+      "timeNeeded": "2017-06-02 20:07:53.142406",
+      "timeTaken": "2017-06-02 20:07:53.142407"
+    },
+    {
+      "username": "Mikel",
+      "med_name": "Ritalin",
+      "timeNeeded": "2017-06-05 16:07:53.142406",
+      "timeTaken": "2017-06-05 16:00:53.142407"
     }
   ],
   "sos": [
     {
       "username": "Mikel",
-      "time_taken" : "2017-05-04 22:00:00.142406",
-      "notes":"Used some cannabis felt 420 pain in vas..."
-    },
+      "notes": "Used some cannabis felt 420 pain in vas...",
+      "time_taken": "2017-06-05 16:05:46.694339"    },
     {
       "username": "Mikel",
-      "time_taken" : "2017-11-04 11:00:00.142406",
-      "notes":"Used some cannabis felt 420 pain in vas..."
+      "notes": "Used some cannabis felt 420 pain in vas...",
+      "time_taken": "2017-05-21 12:05:46.694339"
+    }
+  ],
+  "ano": [
+    {
+      "username": "Mikel",
+      "notes": "I made some physical activity...",
+      "startWorseningTime": "2017-05-08 20:08:53.142406",
+      "endWorseningTime": "2017-05-12 22:06:53.142406"
+    }
+  ],
+  "sos": [
+    {
+      "username": "Mikel",
+      "notes": "Hello world",
+      "type": "Severe",
+      "timeNeeded": "7",
+      "timeDone": "14"
+    }
+  ],
+  "pain": [
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 4,
+      "date": "2017-05-07 14:02:46.691139",
+      "context": "Sports",
+      "was_sos_med": false,
+      "duration": "10",
+      "body_parts": [
+        "neck",
+        "shoulder"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 4,
+      "date": "2017-05-28 14:02:46.691139",
+      "context": "Sports",
+      "was_sos_med": false,
+      "duration": "10",
+      "body_parts": [
+        "neck",
+        "shoulder"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 7,
+      "date": "2017-05-17 14:02:46.691139",
+      "context": "Sports",
+      "was_sos_med": false,
+      "duration": "10",
+      "body_parts": [
+        "neck",
+        "shoulder"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 7,
+      "date": "2017-06-02 14:02:46.691139",
+      "context": "Sports",
+      "was_sos_med": false,
+      "duration": "10",
+      "body_parts": [
+        "neck",
+        "shoulder"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 10,
+      "date": "2017-06-05 14:02:46.691139",
+      "context": "Sports",
+      "was_sos_med": true,
+      "duration": "10",
+      "body_parts": [
+        "neck",
+        "shoulder"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 3,
+      "date": "2017-05-12 16:05:46.694339",
+      "context": "Sports",
+      "was_sos_med": false,
+      "duration": "9",
+      "body_parts": [
+        "leg",
+        "hand"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 4,
+      "date": "2017-05-13 16:05:46.694339",
+      "context": "Sports",
+      "was_sos_med": false,
+      "duration": "9",
+      "body_parts": [
+        "leg",
+        "hand"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 3,
+      "date": "2017-05-14 23:05:46.694339",
+      "context": "Sports",
+      "was_sos_med": false,
+      "duration": "9",
+      "body_parts": [
+        "leg",
+        "hand"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 4,
+      "duration": "9",
+      "context": "Sports",
+      "was_sos_med": false,
+      "date": "2017-06-06 16:05:46.694339",
+      "body_parts": [
+        "leg",
+        "hand"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 10,
+      "duration": "9",
+      "context": "Sports",
+      "was_sos_med": true,
+      "date": "2017-05-21 16:05:46.694339",
+      "body_parts": [
+        "leg",
+        "hand"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
+    },
+    {
+      "username": "mikel",
+      "influences": "Couldn't walk...",
+      "level": 2,
+      "duration": "9",
+      "context": "Sports",
+      "was_sos_med": false,
+      "date": "2017-05-22 16:05:46.694339",
+      "body_parts": [
+        "leg",
+        "hand"
+      ],
+      "type": [
+        "burn",
+        "sharp"
+      ],
+      "mood": "depressed"
     },
     {
       "username": "Mikel",
@@ -54,14 +297,33 @@
       "notes":"Used some cannabis felt 420 pain in vas..."
     },
     {
-      "username": "Mikel",
-      "time_taken" : "2017-11-03 13:00:00.142406",
-      "notes":"Used some cannabis felt 420 pain in vas..."
+      "username": "mikel",
+      "influences": "Hurt realy bad, but could work",
+      "level": 9,
+      "date": "2017-05-25 04:03:39.864288",
+      "context": "Bad Mood",
+      "was_sos_med": true,
+      "dura tion": 5,
+      "body_parts": [
+        "leg"
+      ],
+      "type": "sharp",
+      "mood": "anger"
     },
     {
-      "username": "Mikel",
-      "time_taken" : "2017-11-03 01:00:00.142406",
-      "notes":"Used some cannabis felt 420 pain in vas..."
+      "username": "mikel",
+      "influences": "Hurt realy bad, but could work",
+      "level": 9,
+      "date": "2017-05-28 05:03:39.864288",
+      "context": "Bad Mood",
+      "was_sos_med": true,
+      "duration": 2,
+      "body_parts": [
+        "back",
+        "hand"
+      ],
+      "type": "sharp",
+      "mood": "anger"
     }
   ],
   "pain": [{
